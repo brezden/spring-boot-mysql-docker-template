@@ -3,12 +3,12 @@ services:
     image: mysql:8.0
     container_name: mysql
     environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: project_db
-      MYSQL_USER: username
-      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     ports:
-      - "3307:3306"
+      - "${MYSQL_PORT}:3306"
     volumes:
       - mysql-data:/var/lib/mysql
     healthcheck:
@@ -18,18 +18,23 @@ services:
       retries: 5
 
   spring-app:
-    image: openjdk:17
-    container_name: learning-spring
+    image: openjdk:21-jdk-slim
+    container_name: spring-boot
+
+    # ----- This is just a way to reflect code changes immediately without rebuilding the image
     volumes:
-      - ./:/app
-    working_dir: /app
+      - ./:/volume_code
+    working_dir: /volume_code
+    # -----
+
     command: ["./mvnw", "spring-boot:run"]
     ports:
-      - "8080:8080"
+      - "${SPRING_APP_PORT}:8080"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/project_db
-      SPRING_DATASOURCE_USERNAME: username
-      SPRING_DATASOURCE_PASSWORD: password
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/${MYSQL_DATABASE}
+      SPRING_DATASOURCE_USERNAME: ${MYSQL_USER}
+      SPRING_DATASOURCE_PASSWORD: ${MYSQL_PASSWORD}
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
     depends_on:
       mysql:
         condition: service_healthy
