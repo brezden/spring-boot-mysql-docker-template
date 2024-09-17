@@ -1,6 +1,5 @@
 package com.org.project.controller;
 
-import com.org.project.repository.UserRepository;
 import com.org.project.model.User;
 import com.org.project.service.UserService;
 

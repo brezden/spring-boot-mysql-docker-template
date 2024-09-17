@@ -10,10 +10,9 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-
 	private String name;
-
 	private String email;
+	private String phone_number;
 
 	public Integer getId() {
 		return id;
