@@ -11,3 +11,4 @@ services:
       SPRING_DATASOURCE_USERNAME: ${MYSQL_USER}
       SPRING_DATASOURCE_PASSWORD: ${MYSQL_PASSWORD}
       SPRING_PROFILES_ACTIVE: PROD
+      SPRING_FLYWAY_LOCATIONS: filesystem:spring-boot-jwt-auth-example/migrations
