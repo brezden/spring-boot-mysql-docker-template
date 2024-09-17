@@ -9,9 +9,6 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
       - name: Deploy to EC2
         env:
           PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
@@ -22,11 +19,14 @@ jobs:
           ssh -o StrictHostKeyChecking=no -i private_key ${USER}@${HOST} '
             cd spring-boot-server &&
             git pull origin master &&
-            sudo docker compose -f compose.prod.yaml up --build
+            sudo docker compose -f compose.prod.yaml up --build -d &&
+            echo "Deployment commands executed successfully"
           '
 
       - name: Wait for deployment
-        run: sleep 60
+        run: |
+          echo "Waiting for 45 seconds to allow the application to start..."
+          sleep 45
 
       - name: Check deployment
         env:
