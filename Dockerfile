@@ -7,6 +7,7 @@ COPY pom.xml .
 COPY .mvn ./.mvn
 COPY mvnw .
 COPY src ./src
+COPY migrations ./src/main/resources/db/migrations/
 
 RUN chmod +x mvnw
 RUN ./mvnw clean package -DskipTests
