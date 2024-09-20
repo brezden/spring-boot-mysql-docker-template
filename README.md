@@ -11,6 +11,7 @@ This repository serves as a perfect template for starting a backend server with 
 - [Testing Guide](docs/testing.md)
 - [Migration Guide](docs/migration.md)
 - [Deployment Guide](docs/deploy.md)
+- [Docker Guide](docs/docker.md)
 
 ## Features
 
@@ -39,8 +40,8 @@ This repository serves as a perfect template for starting a backend server with 
 
 1. Clone this repository:
    ```
-   git clone https://github.com/yourusername/spring-boot-backend-template.git
-   cd spring-boot-backend-template
+   git clone https://github.com/brezden/spring-boot-mysql-docker-template.git
+   cd spring-boot-mysql-docker-template
    ```
 
 2. Set up environment variables:
