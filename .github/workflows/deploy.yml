@@ -19,6 +19,11 @@ jobs:
           ssh -o StrictHostKeyChecking=no -i private_key ${USER}@${HOST} '
             cd spring-boot-mysql-docker-template &&
             git pull origin master &&
+            if ! sudo systemctl is-active --quiet docker; then
+              echo "Docker is not running. Starting Docker..."
+              sudo systemctl start docker
+            fi &&
+            sudo docker compose -f compose.prod.yaml down --remove-orphans &&
             sudo docker compose -f compose.prod.yaml up --build -d &&
             echo "Deployment commands executed successfully"
           '
