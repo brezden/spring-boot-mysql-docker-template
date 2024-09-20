@@ -17,7 +17,7 @@ jobs:
         run: |
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
           ssh -o StrictHostKeyChecking=no -i private_key ${USER}@${HOST} '
-            cd spring-boot-server &&
+            cd spring-boot-mysql-docker-template &&
             git pull origin master &&
             sudo docker compose -f compose.prod.yaml up --build -d &&
             echo "Deployment commands executed successfully"
