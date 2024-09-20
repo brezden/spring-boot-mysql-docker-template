@@ -8,12 +8,9 @@ This guide explains the GitHub Actions workflow for running tests in your CI/CD 
 name: CI/CD Pipeline
 
 on:
-  push:
-    branches:
-      - '*'
-  pull_request:
-    branches:
-      - '*'
+   push:
+      branches:
+         - '*'
 
 jobs:
   test-and-lint:
