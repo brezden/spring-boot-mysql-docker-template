@@ -1,6 +1,6 @@
-# EC2 Deployment Guide
+# Server Deployment Guide
 
-This guide explains the GitHub Actions workflow for deploying to an EC2 instance and how to set it up in AWS.
+This guide explains the GitHub Actions workflow for deploying to a server, such as an EC2 instance, but you can use any Ubuntu server for your deployment. The setup process can be adapted to various environments, not just AWS.
 
 ## Disclaimer: Database Setup
 
@@ -65,7 +65,7 @@ jobs:
 
 1. **Trigger**: The workflow runs when changes are pushed to the main branch.
 2. **Deployment**:
-    - Uses SSH to connect to the EC2 instance
+    - Uses SSH to connect to the server
     - Pulls the latest code from the master branch
     - Rebuilds and restarts Docker containers using docker-compose
 3. **Verification**:

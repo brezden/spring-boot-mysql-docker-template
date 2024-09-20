@@ -1,4 +1,4 @@
-name: Deploy to EC2
+name: Deploy to Server
 
 on:
   push:
@@ -6,10 +6,10 @@ on:
       - master
 
 jobs:
-  deploy:
+  deploy-to-server:
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy to EC2
+      - name: Deploy to Server
         env:
           PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
           HOST: ${{ secrets.EC2_HOST }}
