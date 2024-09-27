@@ -19,15 +19,15 @@ SPRING_FLYWAY_LOCATIONS: filesystem:migrations
 Flyway migration files follow a specific naming convention:
 
 ```
-V{version}__{description}.sql
+V{version_date}__{description}.sql
 ```
 
-- `V`: Indicates a versioned migration
-- `{version}`: A version number (e.g., 1, 2, 3.1, 4.2.1)
+- `V`: Indicates a versioned migration. You can also use `U` for undo migration and `R` for repeatable migration.
+- `{version_date}`: The date of your migration change. This helps keep the migrations in a proper order (YYYY_MM_DD_HHMMSS)
 - `__`: Double underscore separating version from description
 - `{description}`: A brief description of the migration, using underscores for spaces
 
-Example: `V1__create_users_table.sql`
+Example: `V2024_09_26_082319__create_users_table.sql`
 
 ## Migration Content
 
@@ -67,10 +67,10 @@ Migrations are applied automatically when the application starts. Spring Boot's 
 
 Here's an example of how your migrations might evolve:
 
-1. `V1__create_users_table.sql`
-2. `V2__add_role_column_to_users.sql`
-3. `V3__create_products_table.sql`
-4. `V4__add_index_to_users_email.sql`
+1. `V2024_09_26_082319__create_users_table.sql`
+2. `V2024_09_26_134529__add_role_column_to_users.sql`
+3. `V2024_09_27_063243_create_products_table.sql`
+4. `V2024_09_28_223847__add_index_to_users_email.sql`
 
 Each of these would contain the necessary SQL to make the described changes.
 
