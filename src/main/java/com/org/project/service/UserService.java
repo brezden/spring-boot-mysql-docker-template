@@ -1,40 +1,54 @@
 package com.org.project.service;
 
+import com.org.project.exception.AccountExistsException;
 import com.org.project.model.User;
+import com.org.project.dto.RegisterRequestDTO;
 import com.org.project.repository.UserRepository;
+
+import com.org.project.util.AuthUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
-    private final UserRepository userRepository;
-
     @Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private UserRepository userRepository;
 
     @Transactional
-    public User saveUser(User user) {
-        logger.info("Attempting to save user: {}", user);
+    public User registerUser(RegisterRequestDTO userRequest) {
+        Optional<User> existingUser = userRepository.findByEmailAndProvider(userRequest.getEmail(), userRequest.getProvider());
+
+        if (existingUser.isPresent()) {
+            throw new AccountExistsException();
+        }
+
+        User newUser = new User();
+        newUser.setName(userRequest.getName());
+        newUser.setEmail(userRequest.getEmail());
+        newUser.setProvider(userRequest.getProvider());
+
+        if (newUser.getProvider() == User.Provider.LOCAL){
+            newUser.setPasswordHash(userRequest.getPassword());
+        }
+
         try {
-            User savedUser = userRepository.save(user);
-            logger.info("User saved successfully: {}", savedUser);
-            return savedUser;
+            return userRepository.save(newUser);
         } catch (Exception e) {
-            logger.error("Error saving user: {}", e.getMessage(), e);
             throw e;
         }
     }
 
-    public List<User> getAllUsers() {
-        return (List<User>) userRepository.findAll();
+    public User getUserFromId(String userId) {
+        return userRepository.findById(userId);
+    }
+
+    public void updateAuthVersion(String userId) {
+        User user = userRepository.findById(userId);
+        user.setAuthVersion(AuthUtil.generateRandomAuthVersion());
+        userRepository.save(user);
     }
 }
