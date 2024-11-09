@@ -9,6 +9,7 @@ This repository provides an ideal template for initiating a backend server with 
 - [Multiple Instance Deployment Guide (Current Strategy)](docs/multiple-instance-deploy.md)
 - [Infrastructure Setup Guide](docs/infrastructure-setup.md)
 - [Docker Guide](docs/docker.md)
+- [GitHub Workflows ](docs/github-workflows.md)
 
 ## Features
 
